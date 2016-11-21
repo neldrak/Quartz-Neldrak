@@ -370,9 +370,9 @@ function CastBarTemplate:ApplySettings()
 
 	self:ClearAllPoints()
 	if not db.x then
-		db.x = (UIParent:GetWidth() / 2 - (db.w * db.scale) / 2) / db.scale
+		db.x = 0
 	end
-	self:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", db.x, db.y)
+	self:SetPoint("CENTER", UIParent, "CENTER", db.x, db.y)
 	self:SetWidth(db.w + 10)
 	self:SetHeight(db.h + 10)
 	self:SetAlpha(db.alpha)
@@ -530,8 +530,9 @@ do
 	end
 
 	local function dragstop(self)
-		self.config.x = self:GetLeft()-UIParent:GetLeft()
-		self.config.y = self:GetBottom()-UIParent:GetBottom()
+		self.config.x, self.config.y = self:GetCenter()
+		self.config.x = self.config.x - (UIParent:GetWidth() / 2 )
+		self.config.y = self.config.y - (UIParent:GetHeight() / 2 )
 		self:StopMovingOrSizing()
 	end
 
@@ -609,9 +610,9 @@ do
 		local bar = getBar(info)
 		local scale = bar.config.scale
 		if v == "horizontal" then
-			bar.config.x = (UIParent:GetWidth() / 2 - (bar.config.w * scale) / 2) / scale
+			bar.config.x = 0
 		else -- L["Vertical"]
-			bar.config.y = (UIParent:GetHeight() / 2 - (bar.config.h * scale) / 2) / scale
+			bar.config.y = 0
 		end
 		bar:ApplySettings()
 	end
